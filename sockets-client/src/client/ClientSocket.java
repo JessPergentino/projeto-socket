@@ -9,7 +9,7 @@ public class ClientSocket {
 		try {
 			Socket cliente = new Socket("127.0.0.1", 3001);
 			ObjectInputStream entrada = new ObjectInputStream(cliente.getInputStream());
-			System.out.println("Conectei de novo");
+			System.out.println("Cliente Conectado");
 			entrada.close();
 			cliente.close();
 			System.out.println("Conexão encerrada");

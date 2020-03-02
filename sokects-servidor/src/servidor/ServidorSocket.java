@@ -21,7 +21,6 @@ public class ServidorSocket {
 				saida.flush();
 				saida.writeObject(new Date());
 				saida.close();
-				servidor.close();
 				cliente.close();
 			}
 		} catch (Exception e) {
