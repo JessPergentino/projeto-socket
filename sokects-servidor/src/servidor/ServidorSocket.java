@@ -4,22 +4,32 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
+import java.util.Scanner;
 
 public class ServidorSocket {
 
+	static final int PORTA = 3001;
+	
 	public static void main(String[] args) {
 		try {
-			// Instancia o ServerSocket ouvindo a porta 3001
-			ServerSocket servidor = new ServerSocket(3001);
+			ServerSocket servidor = new ServerSocket(PORTA);
 			System.out.println("Servidor ouvindo a porta 3001");
+			
 			while (true) {
-				// o método accept() bloqueia a execução até que
-				// o servidor receba um pedido de conexão
 				Socket cliente = servidor.accept();
+				
 				System.out.println("Cliente conectado: " + cliente.getInetAddress().getHostAddress());
 				ObjectOutputStream saida = new ObjectOutputStream(cliente.getOutputStream());
+				
 				saida.flush();
 				saida.writeObject(new Date());
+				
+				Scanner s = new Scanner(cliente.getInputStream());
+		        while (s.hasNextLine()) {
+		            System.out.println(s.nextLine());
+		        }
+				
+		        s.close();
 				saida.close();
 				cliente.close();
 			}
