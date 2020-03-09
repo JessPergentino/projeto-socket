@@ -3,7 +3,6 @@ package servidor;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Date;
 import java.util.Scanner;
 
 public class ServidorSocket {
@@ -22,7 +21,7 @@ public class ServidorSocket {
 				ObjectOutputStream saida = new ObjectOutputStream(cliente.getOutputStream());
 				
 				saida.flush();
-				saida.writeObject(new Date());
+				saida.writeObject("Mensagem Servidor");
 				
 				Scanner s = new Scanner(cliente.getInputStream());
 		        while (s.hasNextLine()) {
