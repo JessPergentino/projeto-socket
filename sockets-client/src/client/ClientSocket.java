@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 public class ClientSocket {
 
-	static final String IP = "10.8.172.12";
-	static final int PORTA = 3000;
+	static final String IP = "192.168.1.67";
+	static final int PORTA = 3001;
 	
 	public static void main(String[] args) {
 		try {	
