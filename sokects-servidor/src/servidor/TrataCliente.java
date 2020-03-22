@@ -1,12 +1,11 @@
 package servidor;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class TrataCliente implements Runnable {
-
 	private Socket cliente;
 
 	public TrataCliente(Socket cliente) {
@@ -15,11 +14,11 @@ public class TrataCliente implements Runnable {
 
 	@Override
 	public void run() {
-		ObjectOutputStream saida;
 		try {
-			saida = new ObjectOutputStream(this.cliente.getOutputStream());
-			saida.flush();
-			saida.writeObject("Mensagem Servidor");
+			PrintWriter out = new PrintWriter(cliente.getOutputStream(), true);
+            out.flush();
+            out.println("Mensagem Servidor." + "\r\n");
+			
 			Scanner s = new Scanner(this.cliente.getInputStream());
 			while (s.hasNextLine()) {
 				System.out.println(s.nextLine());
@@ -30,5 +29,4 @@ public class TrataCliente implements Runnable {
 		}
 
 	}
-
 }
