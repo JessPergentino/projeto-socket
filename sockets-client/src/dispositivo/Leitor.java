@@ -1,4 +1,4 @@
-package leitor;
+package dispositivo;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,7 +21,7 @@ public class Leitor {
 			while (linha != null) {
 				String[] linhaSeparada = linha.split(" ");
 				lista.add(
-						new Dispositivo(linhaSeparada[0], linhaSeparada[1], linhaSeparada[2], EstadosEnum.ATIVADO, 10000));
+						new Dispositivo(linhaSeparada[0], linhaSeparada[1], Integer.parseInt(linhaSeparada[2]), EstadosEnum.ATIVADO, 30));
 				linha = lerArq.readLine();
 			}
 			arq.close();
