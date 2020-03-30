@@ -6,97 +6,82 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.List;
-import java.util.Scanner;
 
+import enumeracoes.ComandosEnum;
 import enumeracoes.EstadosEnum;
 
 public class Dispositivo {
-	public static final String COMANDO = "CONECTAR";
-	private String nome;
+	private int id;
 	private String ip;
 	private int porta;
-	private EstadosEnum estado;
-	private int atualizacao;
+	private EstadosEnum estado = EstadosEnum.LIVRE;
+	private int tempoDeslocamento;
 
 	public Dispositivo() {
 	}
 
-	public Dispositivo(String nome, String ip, int porta, EstadosEnum estado, int atualizacao) {
-		this.nome = nome;
-		this.ip = ip;
-		this.porta = porta;
-		this.estado = estado;
-		this.atualizacao = atualizacao;
-	}
-	
-	public Dispositivo(String nome, String ip, int porta) {
-		this.nome = nome;
+	public Dispositivo(int id, String ip, int porta) {
+		this.id = id;
 		this.ip = ip;
 		this.porta = porta;
 	}
-	
-	public void conectarAoutroDispositivo(String nome) throws UnknownHostException, IOException {
-		Dispositivo temperatura = buscarDispositivo(nome);
 
-		Socket cliente = new Socket(temperatura.getIp(), temperatura.getPorta());
+	public void conectarCentral(int id, ComandosEnum comando) throws UnknownHostException, IOException {
+		Dispositivo disp = buscarDispositivo(id);
+
+		Socket cliente = new Socket(disp.getIp(), disp.getPorta());
 
 		PrintWriter out = new PrintWriter(cliente.getOutputStream(), true);
 		out.flush();
-		out.println(this.getNome() + " " + COMANDO + " " + temperatura.getNome());
+		out.println(comando + " " + this.getId());
+		cliente.close();
+	}
 
-		Scanner s = new Scanner(cliente.getInputStream());
-		while (s.hasNextLine()) {
-			System.out.println(s.nextLine());
+	public void conectarConteiner(int id, ComandosEnum comando) throws UnknownHostException, IOException {
+		Dispositivo disp = buscarDispositivo(id);
+
+		Socket cliente = new Socket(disp.getIp(), disp.getPorta());
+
+		PrintWriter out = new PrintWriter(cliente.getOutputStream(), true);
+		out.flush();
+		out.println(comando + " " + id);
+		cliente.close();
+	}
+
+	public void escutarCentral() throws IOException {
+		ServerSocket servidor = new ServerSocket(this.getPorta());
+		System.out.println("Serviço " + this.getId() + " ouvindo porta " + this.getPorta());
+
+		while (true) {
+			Socket cliente = servidor.accept();
+
+			TrataCentral tc = new TrataCentral(cliente, this);
+			new Thread(tc).start();
+
 		}
-		s.close();
 	}
-	
-	public void escutarDispositivos() throws IOException {
-			ServerSocket servidor = new ServerSocket(this.getPorta());
-			System.out.println("Serviço " + this.getNome() + "ouvindo porta " + this.getPorta());
 
-			while (true) {
-				Socket cliente = servidor.accept();
-
-				TrataCliente tc = new TrataCliente(cliente, this);
-				new Thread(tc).start();
-
-			}
-	}
-	
-	private static Dispositivo buscarDispositivo(String nome) {
+	private static Dispositivo buscarDispositivo(int id) {
 		List<Dispositivo> dipDisponiveis = Leitor.buscarDispositivos();
 
 		for (Dispositivo dispositivo : dipDisponiveis) {
-			if (dispositivo.getNome().trim().equalsIgnoreCase(nome)) {
+			if (dispositivo.getId() == id) {
 				return dispositivo;
 			}
 		}
 		return null;
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
+	public int getId() {
+		return id;
 	}
 
 	public String getIp() {
 		return ip;
 	}
 
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
 	public int getPorta() {
 		return porta;
-	}
-
-	public void setPorta(int porta) {
-		this.porta = porta;
 	}
 
 	public EstadosEnum getEstado() {
@@ -107,17 +92,17 @@ public class Dispositivo {
 		this.estado = estado;
 	}
 
-	public int getAtualizacao() {
-		return atualizacao;
+	public int getTempoDeslocamento() {
+		return tempoDeslocamento;
 	}
 
-	public void setAtualizacao(int atualizacao) {
-		this.atualizacao = atualizacao;
+	public void setTempoDeslocamento(int tempoDeslocamento) {
+		this.tempoDeslocamento = tempoDeslocamento;
 	}
 
 	@Override
 	public String toString() {
-		return "Dispositivo [Nome=" + nome + ", IP=" + ip + ", Porta=" + porta + "]";
+		return "Dispositivo [Id=" + id + ", IP=" + ip + ", Porta=" + porta + "]";
 	}
 
 }

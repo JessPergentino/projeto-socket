@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import enumeracoes.EstadosEnum;
-
 public class Leitor {
 	static final String NOME_ARQUIVO = "lista_dispositivos.txt";
 	private static List<Dispositivo> lista = new ArrayList<>();
@@ -20,8 +18,8 @@ public class Leitor {
 			String linha = lerArq.readLine();
 			while (linha != null) {
 				String[] linhaSeparada = linha.split(" ");
-				lista.add(
-						new Dispositivo(linhaSeparada[0], linhaSeparada[1], Integer.parseInt(linhaSeparada[2]), EstadosEnum.ATIVADO, 30));
+				lista.add(new Dispositivo(Integer.parseInt(linhaSeparada[0]), linhaSeparada[1],
+						Integer.parseInt(linhaSeparada[2])));
 				linha = lerArq.readLine();
 			}
 			arq.close();
