@@ -17,7 +17,7 @@ public class Umidade {
 	private static Runnable r1 = new Runnable() {
 		public void run() {
 			try {
-				umidade.escutarDispositivos();
+				umidade.conectarAoutroDispositivo("Temperatura_1");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

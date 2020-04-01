@@ -53,7 +53,7 @@ public class Dispositivo {
 	
 	public void escutarDispositivos() throws IOException {
 			ServerSocket servidor = new ServerSocket(this.getPorta());
-			System.out.println("Serviço " + this.getNome() + "ouvindo porta " + this.getPorta());
+			System.out.println("Serviço " + this.getNome() + " ouvindo porta " + this.getPorta());
 
 			while (true) {
 				Socket cliente = servidor.accept();
