@@ -1,23 +1,23 @@
 package main;
+
 import java.io.IOException;
 
 import dispositivo.Dispositivo;
 import enumeracoes.EstadosEnum;
 
-public class Umidade {
+public class Servidor {
 
-	static Dispositivo umidade;
-
+	static Dispositivo disp;
+	
 	public static void main(String[] args) {
-		umidade = new Dispositivo("Umidade", "192.168.1.67", 3001, EstadosEnum.ATIVADO, 10);
+		disp = new Dispositivo("Temperatura_J", "192.168.1.67", 3000, EstadosEnum.ATIVADO, 5);
 		new Thread(r1).start();
-
 	}
 
 	private static Runnable r1 = new Runnable() {
 		public void run() {
 			try {
-				umidade.conectarAoutroDispositivo("Temperatura_1");
+				disp.escutarDispositivos();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

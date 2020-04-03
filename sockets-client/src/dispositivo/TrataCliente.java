@@ -27,12 +27,12 @@ public class TrataCliente implements Runnable {
 			PrintStream saida = new PrintStream(cliente.getOutputStream());
 			saida.flush();
 			if (dispositivo.getEstado().equals(EstadosEnum.ATIVADO)) {
-				saida.println(dispositivo.getNome() + " " + dispositivo.getEstado() + " " + dispositivo.getAtualizacao()
-						+ "\r\n");
+				saida.println(dispositivo.getNome() + " " + dispositivo.getEstado() + " " + dispositivo.getAtualizacao());
 				while (true) {
 					new Thread();
 					Thread.sleep( (long) (dispositivo.getAtualizacao() * 1000));
-					saida.println(numeroAleatorio() + "\r\n");
+					Integer temperatura = numeroAleatorio() + 1;
+					saida.println(temperatura.toString());
 				}
 			} else {
 				saida.println(dispositivo.getEstado());
