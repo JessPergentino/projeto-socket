@@ -44,7 +44,7 @@ public class Dispositivo {
 
 		PrintWriter out = new PrintWriter(cliente.getOutputStream(), true);
 		out.flush();
-		out.println(comando + " " + id);
+		out.println(comando);
 		cliente.close();
 	}
 

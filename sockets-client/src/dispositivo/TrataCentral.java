@@ -31,13 +31,11 @@ public class TrataCentral implements Runnable {
 				dispositivo.setEstado(EstadosEnum.OCUPADO);
 
 				dispositivo.setTempoDeslocamento(numeroAleatorio());
-				new Thread();
 				Thread.sleep((long) (dispositivo.getTempoDeslocamento() * 1000));
 
 				dispositivo.conectarConteiner(idConteiner, ComandosEnum.CHEGUEI_CONTEINER);
 
 				dispositivo.setTempoDeslocamento(numeroAleatorio());
-				new Thread();
 				Thread.sleep((long) (dispositivo.getTempoDeslocamento() * 1000));
 
 				dispositivo.conectarCentral(1, ComandosEnum.COLETA_FINALIZADA);
