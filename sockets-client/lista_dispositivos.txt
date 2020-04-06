@@ -1,2 +1,4 @@
-central 0.tcp.ngrok.io 18480
-Central 192.168.1.67 3001
+1 0.tcp.sa.ngrok.io 13344
+3 0.tcp.ngrok.io 16472
+5 0.tcp.ngrok.io 11130
+6 smbo.ddns.net 8082

@@ -28,7 +28,7 @@ public class Dispositivo {
 
 	public void conectarCentral(int id, ComandosEnum comando) throws UnknownHostException, IOException {
 		Dispositivo disp = buscarDispositivo(id);
-
+		
 		Socket cliente = new Socket(disp.getIp(), disp.getPorta());
 
 		PrintWriter out = new PrintWriter(cliente.getOutputStream(), true);
@@ -44,7 +44,7 @@ public class Dispositivo {
 
 		PrintWriter out = new PrintWriter(cliente.getOutputStream(), true);
 		out.flush();
-		out.println(comando);
+		out.println(comando + " " +this.id);
 		cliente.close();
 	}
 
